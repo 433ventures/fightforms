@@ -1,0 +1,17 @@
+{
+  "name": "@fghtfrms-hktn/root",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:frontend": "npm -w @fghtfrms-hktn/frontend run dev",
+    "start:admin": "npm -w @fghtfrms-hktn/admin run start",
+    "start:backend": "PORT=3002 npm -w @fghtfrms-hktn/backend run start:debug"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

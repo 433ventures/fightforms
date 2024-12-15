@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ApplicationAnswer {
+  id: ID!
+  label: ID!
+  question: String!
+  answer: String!
+}
+
+type Application {
+  id: ID!
+  name: String!
+  phone: String!
+  email: String!
+  linkedin: String
+  answers: [ApplicationAnswer!]!
+}
+
+type ApplicationQuestion {
+  id: ID!
+  question: String!
+}
+
+type Query {
+  application(id: ID!): Application
+  questions: [ApplicationQuestion!]
+}
+
+type Mutation {
+  createApplication(data: CreateApplicationInput!, useAI: Boolean): Application!
+  submitAnswers(id: String!, answers: [ApplicationAnswerInput!]!): Application!
+}
+
+input CreateApplicationInput {
+  name: String!
+  email: String!
+  phone: String!
+}
+
+input ApplicationAnswerInput {
+  questionId: String!
+  answer: String!
+}
+
+type Subscription {
+  fieldUpdated(applicationId: ID!): Application!
+  questionChanged(applicationId: ID!): String!
+}
