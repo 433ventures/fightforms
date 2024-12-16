@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useSubscription } from '@apollo/client';
 
@@ -15,6 +15,16 @@ type Props = {
   loading?: boolean;
 }
 
+const defaultFormData: ApplicationFormData = {
+  amount: '',
+  due_date: '',
+  purpose: '',
+  business_name: '',
+  business_description: '',
+  business_operating_duration: '',
+  business_turnover: '',
+};
+
 const ApplicationFormStatic: React.FC<Props> = ({ application, onCommit, loading }) => {
   useSubscription(FIELD_SUBSCRIPTION, {
     onData: ({ data: subscriptionData }) => {
@@ -25,16 +35,21 @@ const ApplicationFormStatic: React.FC<Props> = ({ application, onCommit, loading
     }
   });
 
+  const formInitialValues = useMemo(() =>
+    application.answers.reduce<ApplicationFormData>(
+      (acc, appAnswer) => {
+        if (appAnswer) {
+          acc[appAnswer.label as keyof ApplicationFormData] = appAnswer.answer;
+        }
+        return acc;
+      }, defaultFormData), [application.answers]);
+
   return (
     <ApplicationForm
       name={application.name}
       onCommit={onCommit}
       loading={loading}
-      initialValues={{
-        amount: application.answers.find((item) => item.label === 'amount')?.answer || '',
-        purpose: application.answers.find((item) => item.label === 'purpose')?.answer || '',
-        employment: application.answers.find((item) => item.label === 'employment')?.answer || '',
-      }}
+      initialValues={formInitialValues}
     />
   )
 }

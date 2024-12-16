@@ -3,14 +3,29 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@app/components/ui/button'
 import { Input } from '@app/components/ui/input'
+import { TextArea } from '@app/components/ui/textarea';
 import { Label } from '@app/components/ui/label'
 import { PhoneCall } from 'lucide-react'
 
 export type ApplicationFormData = {
   amount: string;
+  due_date: string;
   purpose: string;
-  employment: string;
+  business_name: string;
+  business_description: string;
+  business_operating_duration: string;
+  business_turnover: string;
 }
+
+const defaultFormData: ApplicationFormData = {
+  amount: '',
+  due_date: '',
+  purpose: '',
+  business_name: '',
+  business_description: '',
+  business_operating_duration: '',
+  business_turnover: '',
+};
 
 type Props = {
   name: string;
@@ -30,11 +45,7 @@ export const ApplicationForm: React.FC<Props> = ({
 
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const [formData, setFormData] = useState<ApplicationFormData>({
-    amount: '',
-    purpose: '',
-    employment: '',
-  });
+  const [formData, setFormData] = useState<ApplicationFormData>(defaultFormData);
 
   useEffect(() => {
     setIsAnimating(true);
@@ -52,11 +63,15 @@ export const ApplicationForm: React.FC<Props> = ({
 
   useEffect(() => {
     if (answers) {
-      setFormData({
-        amount: answers.find((item) => item.label === 'amount')?.answer || '',
-        purpose: answers.find((item) => item.label === 'purpose')?.answer || '',
-        employment: answers.find((item) => item.label === 'employment')?.answer || '',
-      })
+      const newFormData = Object.keys(formData).reduce<ApplicationFormData>((acc, key) => {
+        const answer = answers.find((item) => item.label === key)?.answer || ''
+        if (answer) {
+          acc[key as keyof ApplicationFormData] = answer;
+        }
+        return acc;
+      }, formData);
+
+      setFormData(newFormData)
     }
   }, [answers]);
 
@@ -85,17 +100,31 @@ export const ApplicationForm: React.FC<Props> = ({
             {currentQuestion && (
               <div>
                 <Label htmlFor={currentQuestion.id} className="text-white">{currentQuestion.question}</Label>
-                <Input
-                  id={currentQuestion.id}
-                  type="text"
-                  value={currentAnswer}
-                  onChange={(e) => setFormData({
-                    ...formData,
-                    [currentQuestionId as keyof ApplicationFormData]: e.target.value
-                  })}
-                  required
-                  className="bg-white/10 text-white placeholder-white/50 border-white/20"
-                />
+                {currentQuestion.id === 'business_description' ? (
+                  <TextArea
+                    id={currentQuestion.id}
+                    type="text"
+                    value={currentAnswer}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      [currentQuestionId as keyof ApplicationFormData]: e.target.value
+                    })}
+                    required
+                    className="bg-white/10 text-white placeholder-white/50 border-white/20"
+                  />
+                ): (
+                  <Input
+                    id={currentQuestion.id}
+                    type="text"
+                    value={currentAnswer}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      [currentQuestionId as keyof ApplicationFormData]: e.target.value
+                    })}
+                    required
+                    className="bg-white/10 text-white placeholder-white/50 border-white/20"
+                  />
+                )}
               </div>
             )}
             <Button className="w-full">
@@ -119,15 +148,26 @@ export const ApplicationForm: React.FC<Props> = ({
                     className="font-medium">
                     {questions.find(q => q.id === item.label)?.question}:
                   </Label>
-                  <Input
-                    id={`edit-${item.id}`}
-                    value={value}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      [item.label]: e.target.value
-                    })}
-                    className="bg-white/10 text-white placeholder-white/50 border-white/20 mt-1"
-                  />
+                  {item.label === 'business_description' ? (
+                    <TextArea
+                      id={`edit-${item.id}`}
+                      value={value}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        [item.label]: e.target.value
+                      })}
+                      className="bg-white/10 text-white placeholder-white/50 border-white/20 mt-1"
+                    />): (
+                    <Input
+                      id={`edit-${item.id}`}
+                      value={value}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        [item.label]: e.target.value
+                      })}
+                      className="bg-white/10 text-white placeholder-white/50 border-white/20 mt-1"
+                    />
+                  )}
                 </div>
               );
             })}

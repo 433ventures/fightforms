@@ -130,9 +130,9 @@ export class ApplicationsService {
 
       return application;
     } catch (error){
-      console.error('Error retrieving the prompt:', error);
+      console.error('Error retrieving application:', error);
       throw new HttpException(
-        'Error retrieving the prompt',
+        'Error retrieving application',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

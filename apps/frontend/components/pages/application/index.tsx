@@ -50,23 +50,15 @@ export const ApplicationPage: React.FC<Props> = ({ id, live }) => {
 
   const onSubmit = async (data: ApplicationFormData) => {
     try {
+      const answers = questions.map((q: { id: keyof ApplicationFormData }) => ({
+        questionId: q.id,
+        answer: data[q.id] ?? '',
+      }));
+
       await submitMutation({
         variables: {
           id,
-          answers: [
-            {
-              questionId: 'amount',
-              answer: data.amount,
-            },
-            {
-              questionId: 'purpose',
-              answer: data.purpose,
-            },
-            {
-              questionId: 'employment',
-              answer: data.employment,
-            }
-          ],
+          answers,
         }
       });
       handleScreenChange('end');
