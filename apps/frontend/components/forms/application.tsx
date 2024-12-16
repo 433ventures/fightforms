@@ -64,17 +64,14 @@ export const ApplicationForm: React.FC<Props> = ({
 
   useEffect(() => {
     if (answers) {
-      const newFormData = Object.keys(formData).reduce<ApplicationFormData>((acc, key) => {
-        const answer = answers.find((item) => item.label === key)?.answer || ''
-        if (answer) {
-          acc[key as keyof ApplicationFormData] = answer;
-        }
-        return acc;
-      }, formData);
+      const newFormData = { ...formData };
+      answers.forEach((item) => {
+        newFormData[item.label as keyof ApplicationFormData] = item.answer;
+      });
 
       setFormData(newFormData)
     }
-  }, [answers]);
+  }, [answers, currentQuestionId]);
 
   const currentQuestion = questions.find(q => q.id === currentQuestionId);
   const currentAnswer = currentQuestionId && currentQuestionId in formData ?
