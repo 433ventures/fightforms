@@ -78,17 +78,17 @@ export class ApplicationProcessingAgentService {
   }
 
   async exec(name: string, email: string): Promise<{ linkedin: string, summary: string } | null> {
-    const linkedInProfile = await this.getLinkedInProfile(name, email);
+    const linkedInResult = await this.getLinkedInProfile(name, email);
 
-    if (linkedInProfile === 'Not found') {
+    if (linkedInResult === 'Not found') {
       console.log('LinkedIn Profile not found');
       return null;
     }
 
-    const summary = await this.summarize(linkedInProfile, name, email);
-    console.log('Summary:', summary);
+    // const summary = await this.summarize(linkedInProfile, name, email);
+    // console.log('Summary:', summary);
 
-    return { linkedin: linkedInProfile, summary };
+    return { linkedin: linkedInResult, summary: '' };
   }
 
   async postprocessApplication({

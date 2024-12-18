@@ -117,15 +117,33 @@ class AdminWSService {
   async connect(client: RealtimeClient, application: Application) {
     this.log(`Getting Prompt...`);
     const prompt = await this.promptsService.getPrompt('chat');
-    console.log('Prompt:', prompt);
     if (!prompt) {
       throw new Error('Prompt not found');
     }
 
+    const linkedInInfo = application.linkedin;
+    let user_profile_description = '';
+    let user_company = '';
+
+    try {
+      const data = JSON.parse(String(linkedInInfo).replace('```json\n', '').replace('```', '').trim());
+
+      user_profile_description =  data.user_profile_description;
+      user_company = data.user_company;
+    } catch (e) {
+      console.error('Error parsing likendin data:', e);
+    }
+
+    const instructions = prompt
+      .replace('{name}', application.name)
+      .replace('{user_profile_description}', user_profile_description)
+      .replace('{user_company}', user_company);
+
+    console.log('Instructions:', instructions);
+
     this.log(`Connecting to OpenAI...`);
     const events = await this.openAIRealtimeService.connect(client, {
-      instructions:
-        prompt.replace('{name}', application.name).replace('{summary}', application.summary),
+      instructions,
       input_audio_transcription: { model: 'whisper-1' }
     });
 

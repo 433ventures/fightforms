@@ -154,9 +154,26 @@ class AdminWSService {
       throw new Error('Prompt not found');
     }
 
+    const linkedInInfo = application.linkedin;
+    let user_profile_description = '';
+    let user_company = '';
+
+    try {
+      const data = JSON.parse(String(linkedInInfo).replace('```json\n', '').replace('```', '').trim());
+
+      user_profile_description =  data.user_profile_description;
+      user_company = data.user_company;
+    } catch (e) {
+      console.error('Error parsing likendin data:', e);
+    }
+
+    const instructions = prompt
+      .replace('{name}', application.name)
+      .replace('{user_profile_description}', user_profile_description)
+      .replace('{user_company}', user_company);
+
     const events = await this.openAIRealtimeService.connect(client, {
-      instructions:
-        prompt.replace('{name}', application.name).replace('{summary}', application.summary),
+      instructions,
       input_audio_transcription: { model: 'whisper-1' },
       turn_detection: { type: 'server_vad' },
       input_audio_format: 'g711_ulaw',
