@@ -6,6 +6,7 @@ import { Input } from '@app/components/ui/input'
 import { TextArea } from '@app/components/ui/textarea';
 import { Label } from '@app/components/ui/label'
 import { PhoneCall } from 'lucide-react'
+import Image from 'next/image';
 
 export type ApplicationFormData = {
   amount: string;
@@ -90,6 +91,15 @@ export const ApplicationForm: React.FC<Props> = ({
             <h2 className="text-2xl font-bold mb-4 text-center">{name}, we are calling you.</h2>
             <div className="flex justify-center items-center space-x-4 mb-6">
               <PhoneCall size={48} className="text-white"/>
+              <div className="relative" style={{ width: 24, height: 24, top: -20, left: -14 }}>
+                <Image
+                  src="/ai_stars_white.svg"
+                  width={24}
+                  height={24}
+                  alt="Picture of the author"
+                  className="text-white animate-pulse"
+                />
+              </div>
             </div>
           </>
         )}
