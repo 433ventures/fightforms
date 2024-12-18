@@ -4,7 +4,7 @@ import { ConfigType } from '@nestjs/config';
 
 import config from '../../../config';
 
-import Application from '../../../applications/entities/application.object';
+import Application from '../../../applications/entities/application.entity';
 
 interface TwilioConfig {
   accountSid: string;

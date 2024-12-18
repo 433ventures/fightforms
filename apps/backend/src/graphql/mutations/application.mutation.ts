@@ -3,7 +3,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ValidationPipe } from '@nestjs/common';
 
 import CreateApplicationInput from '../inputs/createApplicationData.input';
-import Application from '../../applications/entities/application.object';
+import Application from '../../applications/entities/application.entity';
 import { ApplicationsService } from '../../applications/applications.service';
 import { TwilioCallsService } from '../../voice/twilio/services/calls.service';
 import ApplicationAnswerInput from '../inputs/applicationAnswerData.input';

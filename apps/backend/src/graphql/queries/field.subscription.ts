@@ -1,6 +1,6 @@
 import { Args, ID, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
-import Application from '../../applications/entities/application.object';
+import Application from '../../applications/entities/application.entity';
 
 @Resolver()
 class FieldSubscriptionsResolver {

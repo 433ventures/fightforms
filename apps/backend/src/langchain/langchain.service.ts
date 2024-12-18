@@ -6,8 +6,8 @@ import { MemorySaver } from "@langchain/langgraph";
 import { HumanMessage, ToolMessage } from '@langchain/core/messages';
 import { v4 as uuidv4 } from 'uuid';
 import { PromptsService } from '../prompts/prompts.service';
-import Application from '../applications/entities/application.object';
-import ApplicationQuestion from '../applications/entities/question.object';
+import Application from '../applications/entities/application.entity';
+import ApplicationQuestion from '../applications/entities/question.entity';
 import { DynamicTool } from '@langchain/core/tools';
 import { MailerService } from '@nestjs-modules/mailer';
 import buildEmail from './assets/email';
@@ -94,7 +94,7 @@ export class ApplicationProcessingAgentService {
   async postprocessApplication({
     application,
     questions,
-  }: { application: Application, questions: ApplicationQuestion[] }): Promise<string> {
+  }: { application: Application, questions: ApplicationQuestion[] }): Promise<void> {
 
     const emailTool = new DynamicTool({
       name: "email",
@@ -123,7 +123,7 @@ export class ApplicationProcessingAgentService {
 
     const prompt = await this.promptsService.getPrompt('postprocess');
     const answersText = questions.map(question => {
-      const answer = application.answers.find(a => a.question === question.question);
+      const answer = application.answers.find(a => a.questionId === question.id);
       return `<question>${question.question}</question><answer>${answer?.answer ? answer.answer : 'Not answered'}</answer>`;
     }).join('\n');
 
@@ -145,12 +145,12 @@ export class ApplicationProcessingAgentService {
 
     console.log('Result:', result);
 
-    try {
-      const data = JSON.parse(String(result).replace('```json\n', '').replace('```', '').trim());
-      return data.verification_result;
-    } catch (e) {
-      console.error('Error parsing result:', e);
-      return null;
-    }
+    // try {
+    //   const data = JSON.parse(String(result).replace('```json\n', '').replace('```', '').trim());
+    //   return data.verification_result;
+    // } catch (e) {
+    //   console.error('Error parsing result:', e);
+    //   return null;
+    // }
   }
 }

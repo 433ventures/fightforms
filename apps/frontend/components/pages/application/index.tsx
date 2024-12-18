@@ -49,10 +49,11 @@ export const ApplicationPage: React.FC<Props> = ({ id, live }) => {
   const [submitMutation, { loading: submitLoading }] = useMutation(SUBMIT_ANSWERS_MUTATION);
 
   const onSubmit = async (data: ApplicationFormData) => {
+    console.log({ data });
     try {
-      const answers = questions.map((q: { id: keyof ApplicationFormData }) => ({
+      const answers = questions.map((q: { id: string, inputName: keyof ApplicationFormData}) => ({
         questionId: q.id,
-        answer: data[q.id] ?? '',
+        answer: data[q.inputName] ?? '',
       }));
 
       await submitMutation({

@@ -6,7 +6,7 @@ import { validate } from 'uuid';
 import type { RealtimeClient } from '@openai/realtime-api-beta';
 import { PromptsService } from '../../prompts/prompts.service';
 import { ApplicationsService } from '../../applications/applications.service';
-import Application from '../../applications/entities/application.object';
+import Application from '../../applications/entities/application.entity';
 import OpenAIRealtimeService from '../openai/realtime.service';
 
 

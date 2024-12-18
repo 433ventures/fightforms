@@ -30,8 +30,8 @@ const defaultFormData: ApplicationFormData = {
 
 type Props = {
   name: string;
-  answers: { id: string, label: string; answer: string }[];
-  questions: { id: string; question: string }[];
+  answers: { id: string, questionId: string; answer: string }[];
+  questions: { id: string; inputName: string; question: string }[];
   currentQuestionId?: string;
   onCommit: () => void;
 }
@@ -66,7 +66,11 @@ export const ApplicationForm: React.FC<Props> = ({
     if (answers) {
       const newFormData = { ...formData };
       answers.forEach((item) => {
-        newFormData[item.label as keyof ApplicationFormData] = item.answer;
+        const question = questions.find(q => q.id === item.questionId);
+        if (!question) {
+          return;
+        }
+        newFormData[question.inputName as keyof ApplicationFormData] = item.answer;
       });
 
       setFormData(newFormData)
@@ -146,21 +150,27 @@ export const ApplicationForm: React.FC<Props> = ({
           <div className="mt-8 pt-8 border-t border-white/20">
             <h3 className="text-xl font-semibold mb-4">Your Application</h3>
             {answers.map((item) => {
-              const value = item.label in formData ? formData[item.label as keyof ApplicationFormData] : item.answer;
+              const question = questions.find(q => q.id === item.questionId);
+              if (!question) {
+                return null;
+              }
+
+              const value = question.inputName in formData ? formData[question.inputName as keyof ApplicationFormData] : item.answer;
+
               return (
                 <div key={item.id} className="mb-2 transition-all duration-300 ease-in-out">
                   <Label
                     htmlFor={`edit-${item.id}`}
                     className="font-medium">
-                    {questions.find(q => q.id === item.label)?.question}:
+                    {question.question}:
                   </Label>
-                  {item.label === 'business_description' ? (
+                  {question.inputName === 'business_description' ? (
                     <TextArea
                       id={`edit-${item.id}`}
                       value={value}
                       onChange={(e) => setFormData({
                         ...formData,
-                        [item.label]: e.target.value
+                        [question.inputName]: e.target.value
                       })}
                       className="bg-white/10 text-white placeholder-white/50 border-white/20 mt-1"
                     />): (
@@ -169,7 +179,7 @@ export const ApplicationForm: React.FC<Props> = ({
                       value={value}
                       onChange={(e) => setFormData({
                         ...formData,
-                        [item.label]: e.target.value
+                        [question.inputName]: e.target.value
                       })}
                       className="bg-white/10 text-white placeholder-white/50 border-white/20 mt-1"
                     />

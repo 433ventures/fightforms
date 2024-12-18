@@ -1,6 +1,6 @@
 import { Resolver, Query, Args, ID } from '@nestjs/graphql';
 import { QuestionsService } from '../../applications/questions.service';
-import ApplicationQuestion from '../../applications/entities/question.object';
+import ApplicationQuestion from '../../applications/entities/question.entity';
 
 
 @Resolver()

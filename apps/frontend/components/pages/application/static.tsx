@@ -9,8 +9,8 @@ import { ApplicationForm, ApplicationFormData } from '../../forms/applicationSta
 import FIELD_SUBSCRIPTION from './graphql/field.subscription';
 
 type Props = {
-  application: { id: string; name: string; answers: { id: string, label: string; answer: string }[] };
-  questions: { id: string; question: string }[];
+  application: { id: string; name: string; answers: { id: string, questionId: string; answer: string }[] };
+  questions: { id: string; inputName: string; question: string }[];
   onCommit: (data: ApplicationFormData) => void;
   loading?: boolean;
 }
@@ -25,11 +25,11 @@ const defaultFormData: ApplicationFormData = {
   business_turnover: '',
 };
 
-const ApplicationFormStatic: React.FC<Props> = ({ application, onCommit, loading }) => {
+const ApplicationFormStatic: React.FC<Props> = ({ application, questions, onCommit, loading }) => {
   useSubscription(FIELD_SUBSCRIPTION, {
-    onData: ({ data: subscriptionData }) => {
-      console.log(`${new Date().toISOString()}: Field updated`, subscriptionData.data.fieldUpdated);
-    },
+    // onData: ({ data: subscriptionData }) => {
+    //   console.log(`${new Date().toISOString()}: Field updated`, subscriptionData.data.fieldUpdated);
+    // },
     variables: {
       id: application.id,
     }
@@ -38,8 +38,10 @@ const ApplicationFormStatic: React.FC<Props> = ({ application, onCommit, loading
   const formInitialValues = useMemo(() =>
     application.answers.reduce<ApplicationFormData>(
       (acc, appAnswer) => {
-        if (appAnswer) {
-          acc[appAnswer.label as keyof ApplicationFormData] = appAnswer.answer;
+        const question = questions.find(q => q.id === appAnswer.questionId);
+
+        if (appAnswer && question) {
+          acc[question.inputName as keyof ApplicationFormData] = appAnswer.answer;
         }
         return acc;
       }, defaultFormData), [application.answers]);

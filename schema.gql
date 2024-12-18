@@ -2,12 +2,29 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ApplicationQuestion {
+  id: ID!
+  inputName: String!
+  label: String!
+  question: String!
+}
+
 type ApplicationAnswer {
   id: ID!
   label: ID!
-  question: String!
+  application: Application!
+  applicationId: ID!
+  question: ApplicationQuestion!
+  questionId: ID!
   answer: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Application {
   id: ID!
@@ -16,11 +33,8 @@ type Application {
   email: String!
   linkedin: String
   answers: [ApplicationAnswer!]!
-}
-
-type ApplicationQuestion {
-  id: ID!
-  question: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Query {

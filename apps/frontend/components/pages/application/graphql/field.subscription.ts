@@ -6,8 +6,8 @@ const FIELD_SUBSCRIPTION = gql`
             id
             answers {
                 id
-                label
                 answer
+                questionId
             }
         }
     }

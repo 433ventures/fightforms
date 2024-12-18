@@ -6,8 +6,8 @@ const SUBMIT_ANSWERS_MUTATION = gql`
             id
             answers {
                 id
-                label
                 answer
+                questionId
             }
         }
     }

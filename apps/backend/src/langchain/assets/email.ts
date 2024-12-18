@@ -1,4 +1,4 @@
-import Application from '../../applications/entities/application.object';
+import Application from '../../applications/entities/application.entity';
 
 type EmailOptions = {
   application: Application;

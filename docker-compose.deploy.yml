@@ -43,11 +43,39 @@ services:
       - TWILIO_TO_PHONE=${TWILIO_TO_PHONE}
       - FRONTEND_PUBLIC_URL=${FRONTEND_PUBLIC_URL}
       - SMTP_CONNECTION_URI=${SMTP_CONNECTION_URI}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
     ports:
       - ${BACKEND_PORT}:3000
       - ${BACKEND_GRAPHQL_PORT}:3001
       - ${BACKEND_WS_PORT}:3003
       - ${BACKEND_TWILIO_WS_PORT}:3004
+      - 
+  postgres:
+    container_name: fghtfrms-hktn-db
+    image: postgres:16.2
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - ${DATA_FOLDER}/postgres:/var/lib/postgresql/data
+  
+  pgadmin:
+    container_name: fghtfrms-hktn-pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - '${PGADMIN_PORT}:80'
+    depends_on:
+      - postgres
 
 #    ports:
 #      - '5672:5672'

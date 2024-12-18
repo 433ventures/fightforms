@@ -7,12 +7,13 @@ const APPLICATION_QUERY = gql`
             name
             answers {
                 id
-                label
                 answer
+                questionId
             }
        }
         questions {
             id
+            inputName
             question
         }
     }
