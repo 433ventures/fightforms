@@ -53,6 +53,7 @@
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "tsconfig-paths": "^4.2.0",
     "twilio": "^5.3.7",
     "typeorm": "^0.3.20",
     "uuid": "^11.0.3",
@@ -80,7 +81,6 @@
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
   },
   "jest": {
