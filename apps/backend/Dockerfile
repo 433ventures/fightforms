@@ -32,6 +32,7 @@ COPY --from=builder /opt/src/node_modules ./node_modules
 COPY --from=builder /opt/src/apps/backend/package.json ./apps/backend/package.json
 COPY --from=builder /opt/src/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /opt/src/apps/backend/node_modules ./apps/backend/node_modules
+COPY --from=builder /opt/src/apps/backend/src/database ./apps/backend/src/database
 
 #launch production build
 CMD ["npm", "run", "-w", "@fghtfrms-hktn/backend" ,"start:prod"]
