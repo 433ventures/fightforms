@@ -1,20 +1,28 @@
+import path from 'path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GraphqlModule as AppGraphqlModule } from './graphql/graphql.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { VoiceModule } from './voice/voice.module';
-import config from './config';
-import path from 'path';
 import { ApplicationsModule } from './applications/applications.module';
+import { GraphqlModule as AppGraphqlModule } from './graphql/graphql.module';
+import { VoiceModule } from './voice/voice.module';
+
+import config from './config';
+import typeOrmConfig from './database/typeorm.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config]
+    }),
+    TypeOrmModule.forRoot({
+      ...typeOrmConfig.options,
+      autoLoadEntities: true,
     }),
     MailerModule.forRoot({
       transport: {

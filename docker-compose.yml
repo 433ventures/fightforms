@@ -1,54 +1,12 @@
-networks:
-  leia-devops-lms:
-    external: true
-  leia-devops-auth:
-    external: true
-
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: ./apps/frontend/Dockerfile
-    image: fghtfrms-hktn-frontend
-    container_name: fghtfrms-hktn-frontend
+  postgres:
+    container_name: fghtfrms-hktn-db
+    image: postgres:16.2
     environment:
-      - GRAPHQL_URL=${GRAPHQL_URL}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - ${FRONTEND_PORT}:3000
-
-  admin:
-    build:
-      context: .
-      dockerfile: ./apps/admin/Dockerfile
-    image: fghtfrms-hktn-admin
-    container_name: fghtfrms-hktn-admin
-    ports:
-      - ${ADMIN_PORT}:80
-
-  backend:
-    build:
-      context: .
-      dockerfile: ./apps/backend/Dockerfile
-    image: fghtfrms-hktn-backend
-    container_name: fghtfrms-hktn-backend
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - GOOGLE_CREDENTIALS=${GOOGLE_CREDENTIALS}
-      - PROMPTS_SPREADSHEET_ID=${PROMPTS_SPREADSHEET_ID}
-      - DATA_SPREADSHEET_ID=${DATA_SPREADSHEET_ID}
-      - TWILIO_WS_ENTRYPOINT=${TWILIO_WS_ENTRYPOINT}
-      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
-      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
-      - TWILIO_FROM_PHONE=${TWILIO_FROM_PHONE}
-      - TWILIO_TO_PHONE=${TWILIO_TO_PHONE}
-      - FRONTEND_PUBLIC_URL=${FRONTEND_PUBLIC_URL}
-      - SMTP_CONNECTION_URI=${SMTP_CONNECTION_URI}
-    ports:
-      - ${BACKEND_PORT}:3000
-      - ${BACKEND_GRAPHQL_PORT}:3001
-      - ${BACKEND_WS_PORT}:3003
-      - ${BACKEND_TWILIO_WS_PORT}:3004
-
-#    ports:
-#      - '5672:5672'
-#      - '15672:15672'
+      - '${DB_PORT}:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data

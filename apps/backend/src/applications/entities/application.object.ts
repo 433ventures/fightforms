@@ -1,4 +1,3 @@
-
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import ApplicationAnswer from './answer.object';
 
