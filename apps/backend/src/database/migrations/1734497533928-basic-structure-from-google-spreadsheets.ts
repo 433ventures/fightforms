@@ -4,6 +4,7 @@ export class BasicStructureFromGoogleSpreadsheets1734497533928 implements Migrat
     name = 'BasicStructureFromGoogleSpreadsheets1734497533928'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
         await queryRunner.query(`CREATE TABLE "application" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "rowNumber" integer NOT NULL, "name" character varying NOT NULL, "phone" character varying NOT NULL, "email" character varying NOT NULL, "linkedin" character varying, "summary" character varying, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "PK_569e0c3e863ebdf5f2408ee1670" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "application_answer" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "applicationId" uuid NOT NULL, "questionId" uuid NOT NULL, "answer" character varying NOT NULL, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), CONSTRAINT "PK_7b640474ae24b0c554817261bb9" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "application_question" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "inputName" character varying NOT NULL, "label" character varying NOT NULL, "question" character varying NOT NULL, CONSTRAINT "PK_8427ec9b186cc5b4bb54b6b7ae3" PRIMARY KEY ("id"))`);
