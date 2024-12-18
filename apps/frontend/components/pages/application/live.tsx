@@ -11,8 +11,8 @@ import QUESTION_SUBSCRIPTION from './graphql/question.subscription';
 
 
 type Props = {
-  application: { id: string; name: string; answers: { id: string, label: string; answer: string }[] };
-  questions: { id: string; question: string }[];
+  application: { id: string; name: string; answers: { id: string, questionId: string; answer: string }[] };
+  questions: { id: string; inputName: string; question: string }[];
   onCommit: () => void;
 }
 
