@@ -45,7 +45,7 @@ class ApplicationsMutationsResolver {
     ) answers: ApplicationAnswerInput[],
   ) {
     const application =await this.applicationsService.submitAnswers(id, answers);
-    await this.applicationsService.postprocessApplication(application);
+    // await this.applicationsService.postprocessApplication(application);
     return application;
   }
 }
