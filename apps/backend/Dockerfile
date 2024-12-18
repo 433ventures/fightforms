@@ -33,9 +33,11 @@ COPY --from=builder /opt/src/apps/backend/package.json ./apps/backend/package.js
 COPY --from=builder /opt/src/apps/backend/dist ./apps/backend/dist
 COPY --from=builder /opt/src/apps/backend/node_modules ./apps/backend/node_modules
 COPY --from=builder /opt/src/apps/backend/src/database ./apps/backend/src/database
+COPY --from=builder /opt/src/apps/backend/tsconfig.json ./apps/backend/tsconfig.json
 
 #launch production build
 CMD ["npm", "run", "-w", "@fghtfrms-hktn/backend" ,"start:prod"]
 
 EXPOSE 3000
 EXPOSE 3003
+EXPOSE 3004

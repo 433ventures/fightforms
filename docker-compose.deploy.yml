@@ -50,7 +50,6 @@ services:
       - DB_DATABASE=${DB_DATABASE}
     ports:
       - ${BACKEND_PORT}:3000
-      - ${BACKEND_GRAPHQL_PORT}:3001
       - ${BACKEND_WS_PORT}:3003
       - ${BACKEND_TWILIO_WS_PORT}:3004
 
