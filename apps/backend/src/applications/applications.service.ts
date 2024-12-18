@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { PubSub } from 'graphql-subscriptions';
 
 import { ConfigType } from '@nestjs/config';
-import { MailerService } from '@nestjs-modules/mailer';
 
 import config from '../config';
 import { ApplicationAnswerData, CreateApplicationData } from './types';
@@ -25,7 +24,6 @@ export class ApplicationsService {
     private readonly pubSub: PubSub,
     private readonly applicationAgent: ApplicationProcessingAgentService,
     private readonly questionsService: QuestionsService,
-    private readonly mailService: MailerService,
   ) {
     const auth = new google.auth.GoogleAuth({
       credentials: JSON.parse(this.configService.google.credentials),

@@ -97,7 +97,6 @@ export const ApplicationForm: React.FC<Props> = ({ onCommit, name, initialValues
             <TextArea
               id="businessDescription"
               name="business_description"
-              type="text"
               value={formData.business_description}
               onChange={(e) => setFormData({...formData, business_description: e.target.value})}
               required

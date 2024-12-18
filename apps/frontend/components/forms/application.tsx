@@ -75,7 +75,7 @@ export const ApplicationForm: React.FC<Props> = ({
     }
   }, [answers]);
 
-  const currentQuestion = questions.find(q => q.id === currentQuestionId);;
+  const currentQuestion = questions.find(q => q.id === currentQuestionId);
   const currentAnswer = currentQuestionId && currentQuestionId in formData ?
     formData[currentQuestionId as keyof ApplicationFormData] :
     undefined;
@@ -103,7 +103,6 @@ export const ApplicationForm: React.FC<Props> = ({
                 {currentQuestion.id === 'business_description' ? (
                   <TextArea
                     id={currentQuestion.id}
-                    type="text"
                     value={currentAnswer}
                     onChange={(e) => setFormData({
                       ...formData,
@@ -140,7 +139,7 @@ export const ApplicationForm: React.FC<Props> = ({
           <div className="mt-8 pt-8 border-t border-white/20">
             <h3 className="text-xl font-semibold mb-4">Your Application</h3>
             {answers.map((item) => {
-              const value = item.label in formData ? formData[item.label as keyof ApplicationFormData] : item.answer;;
+              const value = item.label in formData ? formData[item.label as keyof ApplicationFormData] : item.answer;
               return (
                 <div key={item.id} className="mb-2 transition-all duration-300 ease-in-out">
                   <Label
