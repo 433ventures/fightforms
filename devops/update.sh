@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd /home/ec2-user/src/fghtfrms-hktn
+cd /root/src/fightforms
 
 git reset --hard
 git fetch
