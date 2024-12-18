@@ -53,7 +53,7 @@ services:
       - ${BACKEND_GRAPHQL_PORT}:3001
       - ${BACKEND_WS_PORT}:3003
       - ${BACKEND_TWILIO_WS_PORT}:3004
-      - 
+
   postgres:
     container_name: fghtfrms-hktn-db
     image: postgres:16.2
