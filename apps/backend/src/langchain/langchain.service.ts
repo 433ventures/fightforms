@@ -45,12 +45,15 @@ export class ApplicationProcessingAgentService {
     })
 
     const prompt = await this.promptsService.getPrompt('linkedin');
-    const promptWithData = prompt.replace('{name}', name).replace('{email}', email);
+    const promptWithData = prompt.replaceAll('{name}', name).replaceAll('{email}', email);
 
+    console.log('Linkedin prompt', promptWithData);
     const agentFinalState = await agent.invoke(
       { messages: [new HumanMessage(promptWithData)] },
       { configurable: { thread_id: uuidv4() } },
     );
+
+    console.log(JSON.stringify(agentFinalState, null, 2));
     const result = agentFinalState.messages[agentFinalState.messages.length - 1].content;
 
     return String(result);
@@ -64,7 +67,7 @@ export class ApplicationProcessingAgentService {
     })
 
     const prompt = await this.promptsService.getPrompt('agent_user_context');
-    const promptWithData = prompt.replace('{url}', url).replace('{name}', name).replace('{email}', email);
+    const promptWithData = prompt.replaceAll('{url}', url).replaceAll('{name}', name).replaceAll('{email}', email);
 
     const agentFinalState = await agent.invoke(
       { messages: [new HumanMessage(promptWithData)] },
@@ -85,8 +88,7 @@ export class ApplicationProcessingAgentService {
       return null;
     }
 
-    // const summary = await this.summarize(linkedInProfile, name, email);
-    // console.log('Summary:', summary);
+    console.log({ linkedInResult });
 
     return { linkedin: linkedInResult, summary: '' };
   }
@@ -127,12 +129,12 @@ export class ApplicationProcessingAgentService {
       return `<question>${question.question}</question><answer>${answer?.answer ? answer.answer : 'Not answered'}</answer>`;
     }).join('\n');
 
-    const promptWithData = prompt.replace('{user_contact_info}', `
+    const promptWithData = prompt.replaceAll('{user_contact_info}', `
         Name: ${application.name}
         Email: ${application.email}
         Phone: ${application.phone}
         Summary: ${application.summary}
-    `).replace('{application_questions_and_responses}', answersText);
+    `).replaceAll('{application_questions_and_responses}', answersText);
 
     console.log(promptWithData);
 
