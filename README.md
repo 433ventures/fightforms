@@ -2,10 +2,6 @@
 
 FightForms is a web application consisting of three modules: frontend, backend, and admin. 
 
-* The frontend is built with Next.js
-* The backend is developed using NestJS, 
-* and the admin module is a modified fork of the .
-
 ## Frontend app
 
 Frontend app is a nextjs app that allows users to submit demo application using AI assistant. 
