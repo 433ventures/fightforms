@@ -10,7 +10,6 @@ interface TwilioConfig {
   accountSid: string;
   authToken: string;
   fromPhone: string;
-  toPhone: string;
 }
 
 @Injectable()
@@ -26,7 +25,6 @@ export class TwilioCallsService {
       accountSid: configService.twilio.accountSid,
       authToken: configService.twilio.authToken,
       fromPhone: configService.twilio.phoneNumber,
-      toPhone: process.env.TWILIO_TO_PHONE || '',
     };
 
     this.twilioClient = new Twilio(this.twilioConfig.accountSid, this.twilioConfig.authToken);
