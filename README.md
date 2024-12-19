@@ -31,7 +31,7 @@ You need to copy session id from the frontend app and paste it in the admin app 
 ## Environment Variables
 
 The application requires several environment variables to be set. 
-These variables are described in detail in the `docs/environment.md` file.
+These variables are described in detail in the [docs/environment.md](docs/environment.md) file.
 
 
 ## External Services
@@ -45,13 +45,13 @@ These variables are described in detail in the `docs/environment.md` file.
 
 To run the FightForms app locally, follow these steps:
    
-1. **Clone the repository:**
+1. **Clone the repository**
    ```sh
    git clone git@github.com:433ventures/fightforms.git
    cd fightforms
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies**
    ```sh
    npm ci
    ```
@@ -62,21 +62,22 @@ To run the FightForms app locally, follow these steps:
    docker compose up -d
    ```
 
-4. **Set up environment variables:**
-   Create a `.env` file in the root directory and add the required environment variables as described in the [documentation](docs/environment.md).
+4. **Set up environment variables**
+   
+   Create a `.env` file in the root directory and add the required environment variables as described in the [docs/environment.md](docs/environment.md).
 
    
-5. **Start the frontend:**
+6. **Start the frontend**
    ```sh
    npm run start:frontend
    ```
 
-6. **Start the backend:**
+7. **Start the backend**
    ```sh
    npm run start:backend
    ```
 
-7. **Start the admin interface:**
+8. **Start the admin interface**
    ```sh
    npm run start:admin
    ```
@@ -89,7 +90,7 @@ To run the FightForms app in production using Docker Compose, follow these steps
 
 1. **Prepare Environment Variables:**
    Ensure you have a `.env` file in the root directory containing all the required environment variables as described in
-   the [documentation](docs/environment.md).
+   the [docs/environment.md](docs/environment.md).
 
 
 2. **Build and Start the Application:**
